@@ -1,21 +1,21 @@
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
-import ConstructionSection from './components/ConstructionSection'
-import DesignSection from './components/DesignSection'
-import AboutSection from './components/AboutSection'
-import ContactSection from './components/ContactSection'
+import Services from './components/Services'
+import WorkSection from './components/WorkSection'
+import TeamSection from './components/TeamSection'
+import CTA from './components/CTA'
 import Footer from './components/Footer'
 
 function App() {
   return (
-    <div className="min-h-screen bg-dirt-dark">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <Navigation />
       <main>
         <Hero />
-        <ConstructionSection />
-        <DesignSection />
-        <AboutSection />
-        <ContactSection />
+        <Services />
+        <WorkSection />
+        <TeamSection />
+        <CTA />
       </main>
       <Footer />
     </div>
