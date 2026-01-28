@@ -25,7 +25,7 @@ export default function Services() {
           <p className="text-sm font-medium text-[#ffdd00] uppercase tracking-wider mb-4">
             What we do
           </p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
             Quality data for every phase of your project.
           </h2>
         </div>

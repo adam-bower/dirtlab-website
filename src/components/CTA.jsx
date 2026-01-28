@@ -27,7 +27,7 @@ export default function CTA() {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left - Copy */}
           <div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
               Ready to build with <span className="text-[#ffdd00]">better data?</span>
             </h2>
             <p className="text-xl text-gray-400 mb-8">
