@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background-color: #0a0a0a;
+  color: white;
+  line-height: 1.6;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-8 py-3 bg-dirt-yellow text-black font-semibold rounded-lg
+           hover:bg-yellow-400 transition-all duration-300
+           transform hover:scale-105 hover:shadow-lg hover:shadow-dirt-yellow/20;
+  }
+
+  .btn-secondary {
+    @apply px-8 py-3 bg-dirt-blue text-white font-semibold rounded-lg
+           hover:bg-blue-500 transition-all duration-300
+           transform hover:scale-105 hover:shadow-lg hover:shadow-dirt-blue/20;
+  }
+
+  .btn-outline {
+    @apply px-8 py-3 border-2 border-white text-white font-semibold rounded-lg
+           hover:bg-white hover:text-black transition-all duration-300;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 py-20 md:py-28;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-dirt-yellow to-yellow-300 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-blue {
+    @apply bg-gradient-to-r from-dirt-blue to-blue-400 bg-clip-text text-transparent;
+  }
+}
