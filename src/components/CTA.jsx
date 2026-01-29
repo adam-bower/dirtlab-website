@@ -4,17 +4,47 @@ export default function CTA() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    company: '',
-    message: '',
+    phone: '',
+    business: '',
+    role: '',
+    needs: '',
   });
+  const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Project Inquiry from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\n\nMessage:\n${formData.message}`
-    );
-    window.location.href = `mailto:info@dirtlab.io?subject=${subject}&body=${body}`;
+    setStatus('submitting');
+
+    // Monday Forms submission
+    const mondayFormId = '42e62c1b7dbe2d848554f779027894f9';
+    const formPayload = {
+      name: formData.name,
+      email_mkpmg01v: formData.email,
+      phone_mkpm5hs0: formData.phone,
+      text_mkpmfcc1: formData.business,
+      text_mkqk31xj: formData.role,
+      long_text_mkqkyf41: formData.needs,
+    };
+
+    try {
+      const response = await fetch(`https://forms.monday.com/forms/${mondayFormId}/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formPayload),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', phone: '', business: '', role: '', needs: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setStatus('error');
+    }
   };
 
   const handleChange = (e) => {
@@ -52,50 +82,88 @@ export default function CTA() {
           </div>
 
           {/* Right - Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid sm:grid-cols-2 gap-5">
+          {status === 'success' ? (
+            <div className="flex items-center justify-center h-full min-h-[400px]">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-[#ffdd00] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Thanks for reaching out!</h3>
+                <p className="text-gray-400">We'll be in touch soon.</p>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid sm:grid-cols-2 gap-5">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name *"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email *"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
+                />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-5">
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
+                />
+                <input
+                  type="text"
+                  name="business"
+                  placeholder="Business Name"
+                  value={formData.business}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
+                />
+              </div>
               <input
                 type="text"
-                name="name"
-                placeholder="Name"
-                required
-                value={formData.name}
+                name="role"
+                placeholder="Your Role"
+                value={formData.role}
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
               />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-                value={formData.email}
+              <textarea
+                name="needs"
+                placeholder="Tell us about your project needs..."
+                rows={4}
+                value={formData.needs}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors resize-none"
               />
-            </div>
-            <input
-              type="text"
-              name="company"
-              placeholder="Company"
-              value={formData.company}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors"
-            />
-            <textarea
-              name="message"
-              placeholder="Tell us about your project..."
-              rows={4}
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#ffdd00] transition-colors resize-none"
-            />
-            <button
-              type="submit"
-              className="w-full py-4 bg-[#ffdd00] text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors"
-            >
-              Send Message →
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="w-full py-4 bg-[#ffdd00] text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {status === 'submitting' ? 'Sending...' : 'Send Message →'}
+              </button>
+              {status === 'error' && (
+                <p className="text-red-400 text-sm text-center">
+                  Something went wrong. Please try again or email us directly.
+                </p>
+              )}
+            </form>
+          )}
         </div>
       </div>
     </section>
